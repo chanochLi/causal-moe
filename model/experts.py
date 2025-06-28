@@ -1,0 +1,15 @@
+import torch
+from torch import nn
+from torch.nn import functional as F
+from config import BasicConfig
+
+
+class BasicExpert(nn.Module):
+    # 最简单的expert就是一个线性层
+    def __init__(self, config: BasicConfig):
+        super(BasicExpert, self).__init__()
+
+        self.fc = nn.Linear(config.hidden_dim, config.hidden_dim)
+
+    def forward(self, x: torch.Tensor):
+        return self.fc(x)
