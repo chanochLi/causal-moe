@@ -2,6 +2,7 @@ import torch
 from torch import nn
 from torch.nn import functional as F
 from config import BasicConfig
+from ffn import UpDownFFN, SwiGLUFFN
 
 
 class BasicExpert(nn.Module):
@@ -9,7 +10,14 @@ class BasicExpert(nn.Module):
     def __init__(self, config: BasicConfig):
         super(BasicExpert, self).__init__()
 
-        self.fc = nn.Linear(config.hidden_dim, config.hidden_dim)
+        self.expert = nn.Linear(config.hidden_dim, config.hidden_dim)
 
     def forward(self, x: torch.Tensor):
-        return self.fc(x)
+        return self.expert(x)
+
+class UpDownExpert(BasicExpert):
+
+    def __init__(self, config):
+        super().__init__(config)
+
+        self.expert = UpDownFFN(config)

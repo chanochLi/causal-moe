@@ -1,18 +1,9 @@
 import torch
 from torch import nn
 from torch.nn import functional as F
-from experts import BasicExpert
-from config import BasicConfig
-from dataclasses import dataclass
+from experts import BasicExpert, UpDownExpert
+from config import BasicConfig, MOEConfig
 from gate import MOERouter
-
-
-@dataclass
-class MOEConfig(BasicConfig):
-    hidden_dim: int
-    expert_num: int
-    top_k: int
-    share_expert_num: int = 2
 
 
 class BasicMoE(nn.Module):
