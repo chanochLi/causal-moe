@@ -37,3 +37,4 @@ class UpDownMOEBlockConfig(AttentionConfig, MOEConfig, UpDownFFNConfig):
 @dataclass
 class TransformerConfig(BlockConfig):
     num_layer: int
+    voc_size: int
