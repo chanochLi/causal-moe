@@ -2,13 +2,13 @@ import torch
 from torch import nn
 from torch.nn import functional as F
 from experts import BasicExpert, UpDownExpert
-from config import BasicConfig, MOEConfig
+from config.model_config import BasicModelConfig, MOEConfig
 from gate import MOERouter
 
 
 class BasicMoE(nn.Module):
     # 线性专家组合为专家层
-    def __init__(self, config: BasicConfig):
+    def __init__(self, config: BasicModelConfig):
         super(BasicMoE, self).__init__()
 
         # 门控选择所有专家，可以有很复杂的实现
@@ -42,7 +42,7 @@ class BasicMoE(nn.Module):
 
 class SparseMOE(nn.Module):
 
-    def __init__(self, config: BasicConfig):
+    def __init__(self, config: BasicModelConfig):
         super().__init__()
 
         self.config = config

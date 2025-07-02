@@ -1,12 +1,12 @@
 import torch
 from torch import nn
 from torch.nn import functional as F
-from config import BasicConfig
+from config.model_config import BasicModelConfig
 
 
 class BasicGate(nn.Module):
     # 最简单的使用线性层作为gate
-    def __init__(self, config: BasicConfig):
+    def __init__(self, config: BasicModelConfig):
         super().__init__()
 
         self.gate = nn.Linear(config.hidden_dim, config.expert_num)
@@ -18,7 +18,7 @@ class BasicGate(nn.Module):
 ## 参考mistral MOE的代码
 class MOERouter(nn.Module):
 
-    def __init__(self, config: BasicConfig):
+    def __init__(self, config: BasicModelConfig):
         super().__init__()
 
         self.top_k = config.top_k

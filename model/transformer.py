@@ -1,19 +1,19 @@
 import torch
 from torch import nn
-from config import BasicConfig
+from config.model_config import BasicModelConfig
 from block import Block
 from torch.nn import functional as F
 
 
 class CausalTransformer(nn.Module):
     
-    def __init__(self, config: BasicConfig):
+    def __init__(self, config: BasicModelConfig):
         super().__init__()
         
         # 记录参数
         self.config = config
         
-        # 
+        # embedding + block + ln + head
         self.token_embedding_table = nn.Embedding(config.voc_size, config.hidden_dim)
         self.position_embedding_table = nn.Embedding(config.block_size, config.hidden_dim)
         self.blocks = nn.Sequential(
@@ -57,4 +57,7 @@ class CausalTransformer(nn.Module):
             loss = F.cross_entropy(logits, target)
             
         return logits, loss
-        
+    
+    def generate(self, idx: torch.Tensor, max_new_token: int):
+        # idx: [batch, seq_len]
+        pass

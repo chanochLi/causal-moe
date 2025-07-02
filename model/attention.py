@@ -2,12 +2,12 @@ from torch import nn
 import torch
 from torch.nn import functional as F
 import math
-from config import BasicConfig
+from config.model_config import BasicModelConfig
 
 
 class Attention(nn.Module):
 
-    def __init__(self, config: BasicConfig):
+    def __init__(self, config: BasicModelConfig):
         super().__init__()
 
         # 记录参数
@@ -78,7 +78,7 @@ if __name__ == '__main__':
 
     x = torch.rand(3, 2, 128)
 
-    from config import AttentionConfig
+    from config.model_config import AttentionConfig
     config = AttentionConfig(128, 8, 16, 0.1)
     net = Attention(config)
     print(net(x, attention_mask).shape)

@@ -1,4 +1,4 @@
-from config import BasicConfig
+from config.model_config import BasicModelConfig
 from torch import nn
 import torch
 from torch.nn import functional as F
@@ -7,7 +7,7 @@ from torch.nn import functional as F
 class UpDownFFN(nn.Module):
     # the initial up scale and down scale FFN layer
 
-    def __init__(self, config: BasicConfig):
+    def __init__(self, config: BasicModelConfig):
         super().__init__()
 
         # 记录参数
@@ -41,7 +41,7 @@ class UpDownFFN(nn.Module):
         return output
 
 class SwiGLUFFN(nn.Module):
-    def __init__(self, config: BasicConfig):
+    def __init__(self, config: BasicModelConfig):
         super().__init__()
 
         # 记录参数

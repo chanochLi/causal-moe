@@ -1,4 +1,4 @@
-from config import BasicConfig, BlockConfig, MOEBlockConfig
+from config.model_config import BasicModelConfig, BlockConfig, MOEBlockConfig
 from torch import nn
 import torch
 from attention import Attention
@@ -7,7 +7,7 @@ from moe import BasicMoE
 
 class Block(nn.Module):
 
-    def __init__(self, config: BasicConfig):
+    def __init__(self, config: BasicModelConfig):
         super().__init__()
 
         # 记录参数
