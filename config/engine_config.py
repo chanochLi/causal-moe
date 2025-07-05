@@ -11,7 +11,8 @@ class BasicEngineConfig:
     batch: int = 16
     
     # log parameters
-    logger: str | None = None
+    logger_type: str | None = None
+    logger: any | None = None
     
     # runtime parameters
     seed: int = 0

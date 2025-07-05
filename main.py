@@ -7,6 +7,7 @@ from utils.engine import set_random_seed
 from model.transformer import CausalTransformer
 from config.model_config import TransformerConfig
 from engine.pretrain import train_one_epoch, eval
+from clearml import Task, Logger
 
 def main(config: BasicEngineConfig):
     # check device, only support one card
@@ -64,6 +65,9 @@ def main(config: BasicEngineConfig):
         print(
             f"Epoch: {epoch}, train_loss: {train_loss/len(train_loader):.4f}, val_loss: {val_loss/len(val_loader):.4f}"
         )
+        if config.logger_type == 'clearml' and config.logger is not None:
+            config.logger.report_scalar(title='Loss', series='train', value=train_loss/len(train_loader), interaction=epoch)
+            config.logger.report_scalar(title='Loss', series='val', value=val_loss/len(val_loader), interaction=epoch)
 
         avg_val_loss = val_loss / len(val_loader)
         checkpoint = {
@@ -78,5 +82,9 @@ def main(config: BasicEngineConfig):
 
 
 if __name__ == "__main__":
-    config = PretrainConfig(data_path='/Users/chanoch/Documents/project/causal-moe/data/mobvoi_seq_monkey_general_open_corpus.jsonl', device='mps', )
+    
+    config = PretrainConfig(data_path='/Users/chanoch/Documents/project/causal-moe/data/mobvoi_seq_monkey_general_open_corpus.jsonl', device='mps', logger_type='clearml')
+    if config.logger_type == 'clearml':
+        task = Task.init(project_name='moe-text', task_name='test_model_on_seq_monkey_dataset')
+        config.logger = Logger.current_logger()
     main(config)
