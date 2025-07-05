@@ -47,7 +47,7 @@ class Attention(nn.Module):
             mask = mask.tril()
             attn_score = torch.masked_fill(attn_score, mask==0, -torch.inf)
         else:
-            mask = torch.ones_like(attn_weight).tril()
+            mask = torch.ones_like(attn_score).tril()
             attn_score = torch.masked_fill(attn_score, mask==0, -torch.inf)
 
         # 获取注意力权重 [batch, head, seq_len, seq_len]

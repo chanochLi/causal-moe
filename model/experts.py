@@ -2,7 +2,7 @@ import torch
 from torch import nn
 from torch.nn import functional as F
 from config.model_config import BasicModelConfig
-from ffn import UpDownFFN, SwiGLUFFN
+from .ffn import UpDownFFN, SwiGLUFFN
 
 
 class BasicExpert(nn.Module):

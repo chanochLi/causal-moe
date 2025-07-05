@@ -1,9 +1,9 @@
-from config.model_config import BasicModelConfig, BlockConfig, MOEBlockConfig
+from config.model_config import BasicModelConfig, BlockConfig, BasicMOEBlockConfig
 from torch import nn
 import torch
-from attention import Attention
-from ffn import UpDownFFN, SwiGLUFFN
-from moe import BasicMoE
+from .attention import Attention
+from .ffn import UpDownFFN, SwiGLUFFN
+from .moe import BasicMoE
 
 class Block(nn.Module):
 
@@ -50,7 +50,7 @@ class BasicMOEBlock(Block):
 
 if __name__ == '__main__':
     x = torch.rand(3, 4, 64)
-    config = MOEBlockConfig(hidden_dim=64, num_head=8, head_dim=8, dropout_rate=0.1, expert_num=4, top_k=2, share_expert_num=2)
+    config = BasicMOEBlockConfig(hidden_dim=64, num_head=8, head_dim=8, dropout_rate=0.1, expert_num=4, top_k=2, share_expert_num=2)
     net = BasicMOEBlock(config)
     mask = (
         torch.tensor([[1, 1, 1, 1], [1, 1, 0, 0], [1, 1, 1, 0]])

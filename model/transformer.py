@@ -1,7 +1,7 @@
 import torch
 from torch import nn
 from config.model_config import BasicModelConfig
-from block import Block
+from .block import Block
 from torch.nn import functional as F
 
 
@@ -34,7 +34,7 @@ class CausalTransformer(nn.Module):
         elif isinstance(nn.Embedding):
             torch.nn.init.normal_(layer.weight, mean=0.0, std=0.02)
     
-    def forward(self, idx: torch.Tensor, target: torch.Tensor = None) -> torch.Tensor:
+    def forward(self, idx: torch.Tensor, targets: torch.Tensor = None) -> torch.Tensor:
         # 输入是token idx
         # [batch, seq_len]
         batch, seq_len = idx.size()
@@ -48,13 +48,13 @@ class CausalTransformer(nn.Module):
         logits = self.ln_final(x)
         
         # 计算自回归loss
-        if target is None:
+        if targets is None:
             loss = None
         else:
             batch, seq_len, voc_size = logits.size()
             logits = logits.view(batch * seq_len, voc_size)
-            target = target.view(batch * seq_len)
-            loss = F.cross_entropy(logits, target)
+            targets = targets.view(batch * seq_len)
+            loss = F.cross_entropy(logits, targets)
             
         return logits, loss
     

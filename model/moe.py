@@ -1,9 +1,9 @@
 import torch
 from torch import nn
 from torch.nn import functional as F
-from experts import BasicExpert, UpDownExpert
+from .experts import BasicExpert, UpDownExpert
 from config.model_config import BasicModelConfig, MOEConfig
-from gate import MOERouter
+from .gate import MOERouter
 
 
 class BasicMoE(nn.Module):

@@ -9,3 +9,7 @@ wheels/
 # Virtual environments
 .venv
 data/
+
+# mac system files
+__MACOSX__
+.DS_Store
